@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 
 class UserResource extends JsonResource
 {
+    public static $warp = false;
+
     /**
      * Transform the resource into an array.
      *
@@ -20,7 +22,7 @@ class UserResource extends JsonResource
             'avatar_url' => $this->avatar ? Storage::url($this->avatar) : null,
             'name' => $this->name,
             'email' => $this->email,
-            'is_admin' => (bool) $this->isAdmin(),
+            'is_admin' => (bool) $this->is_admin,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'last_seen_at' => $this->last_seen_at,
