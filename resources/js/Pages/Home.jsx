@@ -19,6 +19,38 @@ function Home({ messages }) {
                     <ChatBubbleLeftRightIcon className="w-32 h-32 inline-block" />
                 </div>
             )}
+
+            {messages && (
+                <>
+                    <ConversationHeader
+                        selectedConversation={selectedConversation}
+                    />
+
+                    <div
+                        className="flex-1 overflow-y-auto p-5"
+                        ref={{ messageCtrRef }}
+                    >
+                        {localMessages.length === 0 && (
+                            <div className="flex justify-center items-center h-full">
+                                <div className="text-lg text-slate-200 ">
+                                    No messages found
+                                </div>
+                            </div>
+                        )}
+                        {localMessages.length > 0 && (
+                            <div className="flex flex-1 flex-col">
+                                {localMessages.map((message, index) => (
+                                    <MessageItem
+                                        key={index}
+                                        message={message}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    <MessageInput conversation={selectedConversation} />
+                </>
+            )}
         </>
     );
 }
