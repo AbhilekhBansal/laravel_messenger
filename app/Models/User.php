@@ -74,7 +74,8 @@ class User extends Authenticatable
             ->orderBy('messages.created_at', 'desc')
             ->orderBy('users.name');
 
-        // dd($query->toSql());
+        // dd($query->get());
+
         return $query->get();
 
     }

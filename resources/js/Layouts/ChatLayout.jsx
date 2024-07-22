@@ -2,6 +2,7 @@ import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import Echo from "laravel-echo";
 import TextInput from "@/Components/TextInput";
+import ConversationItem from "@/Components/App/ConversationItem";
 
 const ChatLayout = ({ children }) => {
     const page = usePage();

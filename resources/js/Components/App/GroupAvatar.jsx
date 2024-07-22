@@ -1,4 +1,4 @@
-import { UserIcon, UsersIcon, usersIcon } from "@heroicons/react/24/solid";
+import { UsersIcon } from "@heroicons/react/24/solid";
 
 const GroupAvatar = () => {
     return (
