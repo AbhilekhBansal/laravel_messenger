@@ -31,7 +31,7 @@ class Message extends Model
         return $this->belongsTo(Group::class);
     }
 
-    public function attachment()
+    public function attachments()
     {
         return $this->hasMany(MessageAttachment::class);
     }

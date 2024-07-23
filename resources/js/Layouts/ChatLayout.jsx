@@ -12,8 +12,7 @@ const ChatLayout = ({ children }) => {
     const [sortedConversations, setSortedConversations] = useState([]);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const isUserOnline = (userId) => onlineUsers[userId];
-    console.log("conversations", conversations);
-    console.log("selectedConversation", selectedConversation);
+
     const onSearch = (ev) => {
         const search = ev.target.value.toLowerCase();
         setLocalConversations(
@@ -90,12 +89,12 @@ const ChatLayout = ({ children }) => {
         <>
             <div className="flex-1 w-full flex  overflow-hidden ">
                 <div
-                    className={`transition-all w-full sm:w-[220px] md:w-[300px] bg-slate-800 flex flex-col overflow-hidden ${
+                    className={`transition-all w-full sm:w-[220px] md:w-[300px] bg-slate-800 flex flex-col overflow-auto ${
                         selectedConversation ? "-ml-[100%] sm:ml-0" : ""
                     }`}
                 >
-                    <div className="flex items-center justify-between py-2 px3 text-xl font-medium">
-                        My conversation
+                    <div className="flex items-center justify-between py-2 px-2 text-xl font-medium text-gray-200">
+                        My conversations
                         <div
                             className="tooltip tooltip-left"
                             data-tip="Create new Group"
@@ -125,7 +124,7 @@ const ChatLayout = ({ children }) => {
                             className="w-full"
                         />
                     </div>
-                    <div className="flex-1 overflow-auto">
+                    <div className="h-lvh overflow-auto">
                         {sortedConversations &&
                             sortedConversations.map((conversation) => (
                                 <ConversationItem

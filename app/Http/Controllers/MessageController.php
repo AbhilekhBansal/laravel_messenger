@@ -18,14 +18,18 @@ class MessageController extends Controller
             ->latest()
             ->paginate(10);
 
-        return inertia('Home', ['selectedConversation' => $user->toConversationArray(), 'messages' => MessageResource::collection($messages)],
+        // return MessageResource::collection($messages);
+        // return MessageResource::collection($messages);
 
-        );
+        return inertia('Home', [
+            'selectedConversation' => $user->toConversationArray(), 'messages' => MessageResource::collection($messages),
+        ], );
+
     }
 
     public function byGroup(Group $group)
     {
-        $message = Message::where('group_id', $group->id)
+        $messages = Message::where('group_id', $group->id)
             ->latest()
             ->paginate(10);
 
