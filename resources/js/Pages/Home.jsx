@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import ConversationHeader from "@/Components/App/ConversationHeader";
 import MessageItem from "@/Components/App/MessageItem";
+import MessageInput from "@/Components/App/MessageInput";
 
 function Home({ messages = null, selectedConversation = null }) {
     // console.log(messages.data);
@@ -54,7 +55,7 @@ function Home({ messages = null, selectedConversation = null }) {
                             </div>
                         )}
                         {localMessages?.length > 0 && (
-                            <div className="flex  h-lvh flex-col">
+                            <div className="flex flex-col">
                                 {localMessages.map((message) => (
                                     <MessageItem
                                         key={message.id}
@@ -65,6 +66,7 @@ function Home({ messages = null, selectedConversation = null }) {
                         )}
                     </div>
                     {/* <MessageInput conversation={selectedConversation} /> */}
+                    <MessageInput conversation={selectedConversation} />
                 </>
             )}
         </>

@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SocketMessage;
+use App\Http\Requests\StoreMessageRequest;
 use App\Http\Resources\MessageResource;
+use App\Models\Conversation;
 use App\Models\Group;
 use App\Models\Message;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class MessageController extends Controller
 {
@@ -91,7 +95,7 @@ class MessageController extends Controller
         if ($groupId) {
             Group::updateGroupWithMessage($groupId, $message);
         }
-        SocketMeessage::dispatch($message);
+        SocketMessage::dispatch($message);
 
         return new MessageResource($message);
 

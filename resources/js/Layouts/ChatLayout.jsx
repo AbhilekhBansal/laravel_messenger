@@ -136,8 +136,8 @@ const ChatLayout = ({ children }) => {
                         ))}
                 </div>
             </div>
-            <div className="flex-1 flex flex-col overflow-hidden">
-                <p className="text-white">{children}</p>
+            <div className="flex-1 flex flex-col overflow-hidden text-white">
+                {children}
             </div>
         </>
     );
