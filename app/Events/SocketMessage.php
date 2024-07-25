@@ -17,17 +17,20 @@ class SocketMessage implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public function __construct(public Message $message)
-    {
-        //
-    }
+    public function __construct(public Message $message) {}
 
     public function broadcastWith(): array
     {
+
         return [
 
             'message' => new MessageResource($this->message),
         ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'SocketMessage';
     }
 
     /**
@@ -40,13 +43,14 @@ class SocketMessage implements ShouldBroadcastNow
 
         $m = $this->message;
         $channels = [];
-
+        // dd($m->receiver_id);
         if ($m->group_id) {
             $channels[] = new PrivateChannel('message.group.'.$m->group_id);
 
         } else {
-            new PrivateChannel('message.user.'.collect($m->sender_id, $m->receiver_id)->sort()->implode('_'));
+            $channels[] = new PrivateChannel('message.user.'.collect([$m->sender_id, $m->receiver_id])->sort()->implode('-'));
         }
+        // dd($channels);
 
         return $channels;
     }

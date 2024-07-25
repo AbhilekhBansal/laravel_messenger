@@ -15,6 +15,7 @@ Broadcast::channel('message.user.{userId1}-{userId2}', function ($user, int $use
     return (int) $user->id === $userId1 || (int) $user->id === $userId2 ? $user : null;
 });
 
-Broadcast::channel('message.group.{groupId}', function (User $user, int $groupId) {
+// Broadcast::channel('message.group.{groupId}', function (User $user, int $groupId) {
+Broadcast::channel('message.group.{groupId}', function ($user, int $groupId) {
     return $user->groups->contains('id', $groupId) ? $user : null;
 });

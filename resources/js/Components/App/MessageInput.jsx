@@ -35,13 +35,13 @@ const MessageInput = ({ conversation = null }) => {
             .post(route("message.store"), formData, {
                 onUploadProgress: (progressEvent) => {
                     const progress = Math.round(
-                        (progressEvent.loaded, progressEvent.total) * 100
+                        (progressEvent.loaded / progressEvent.total) * 100
                     );
-                    console.log(progress);
+                    // console.log(progress);
                 },
             })
             .then((response) => {
-                console.log("responsse", response);
+                // console.log("responsse", response);
                 setNewMessage("");
                 setmessageSending(false);
             })

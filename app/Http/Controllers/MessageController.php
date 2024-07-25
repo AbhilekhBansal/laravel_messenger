@@ -95,6 +95,7 @@ class MessageController extends Controller
         if ($groupId) {
             Group::updateGroupWithMessage($groupId, $message);
         }
+        // dd($message);
         SocketMessage::dispatch($message);
 
         return new MessageResource($message);
