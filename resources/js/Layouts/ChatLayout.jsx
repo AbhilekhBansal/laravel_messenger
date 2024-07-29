@@ -87,18 +87,21 @@ const ChatLayout = ({ children }) => {
 
     return (
         <>
+            {/* bg-slate-800 */}
             <div
-                className={`transition-all w-full sm:w-[220px] md:w-[300px] bg-slate-800 flex flex-col overflow-auto ${
+                className={`transition-all w-full sm:w-[220px] md:w-[300px] dark:bg-slate-800 bg-slate-200 flex flex-col overflow-auto ${
                     selectedConversation ? "-ml-[100%] sm:ml-0" : ""
                 }`}
             >
-                <div className="flex items-center justify-between py-2 px-2 text-xl font-medium text-gray-200">
+                {/* text-gray-200 */}
+                <div className="flex items-center dark:text-gray-200 text-gray-800 justify-between py-2 px-2 text-xl font-medium ">
                     My conversations
                     <div
                         className="tooltip tooltip-left"
                         data-tip="Create new Group"
                     >
-                        <button className="text-gray-400 hover:text-gray-200">
+                        {/* text-gray-400 hover:text-gray-200*/}
+                        <button className="dark:text-gray-400 text-gray-600 dark:hover:text-gray-200 hover:text-gray-900">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -136,7 +139,8 @@ const ChatLayout = ({ children }) => {
                         ))}
                 </div>
             </div>
-            <div className="flex-1 flex flex-col overflow-hidden text-white">
+            {/* text-white */}
+            <div className="flex-1 flex flex-col overflow-hidden dark:text-white black">
                 {children}
             </div>
         </>

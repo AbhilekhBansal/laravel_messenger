@@ -49,7 +49,7 @@ export default function UserOptionsDropdown({ conversation }) {
         <>
             <Menu as="div" className="relative inline-block text-left">
                 <div>
-                    <MenuButton className="flex justify-center items-center w-8 h-8 rounded-full hover:bg-black/40">
+                    <MenuButton className="flex justify-center items-center w-8 h-8 rounded-full dark:hover:bg-black/40 hover:bg-white/40">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -75,7 +75,7 @@ export default function UserOptionsDropdown({ conversation }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <MenuItems className="absolute right-0 mt-2 w-48 rounded-md bg-gray-800 shadow-lg z-50">
+                    <MenuItems className="absolute right-0 mt-2 w-48 rounded-md dark:bg-gray-800 bg-gray-200 shadow-lg z-50">
                         <div className="px-1 py-1">
                             <MenuItem>
                                 {({ active }) => (
@@ -83,8 +83,8 @@ export default function UserOptionsDropdown({ conversation }) {
                                         onClick={onBlockUser}
                                         className={`${
                                             active
-                                                ? "bg-black/30 text-white"
-                                                : "text-gray-100"
+                                                ? "dark:bg-black/30 bg-white/30 dark:text-white text-black"
+                                                : "dark:text-gray-100 text-gray-900"
                                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                     >
                                         {conversation.blocked_at && (
@@ -136,8 +136,8 @@ export default function UserOptionsDropdown({ conversation }) {
                                         onClick={changeUserRole}
                                         className={`${
                                             active
-                                                ? "bg-black/30 text-white"
-                                                : "text-gray-100"
+                                                ? "dark:bg-black/30 bg-white/30 dark:text-white text-black"
+                                                : "dark:text-gray-100 text-gray-900"
                                         } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                     >
                                         {conversation.is_admin && (

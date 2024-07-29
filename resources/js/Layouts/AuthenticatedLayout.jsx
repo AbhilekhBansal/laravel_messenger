@@ -6,10 +6,11 @@ import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link, usePage } from "@inertiajs/react";
 import GroupAvatar from "@/Components/App/GroupAvatar";
 import { useEventBus } from "@/EventBus";
+import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 
 export default function Authenticated({ header, children }) {
     const page = usePage();
-
+    const [theme, setTheme] = useState(true);
     const user = page.props.auth.user;
     const conversations = page.props.conversations;
 
@@ -72,7 +73,11 @@ export default function Authenticated({ header, children }) {
         };
     }, [conversations]);
     return (
-        <div className="h-screen bg-gray-100 flex flex-col dark:bg-gray-900">
+        <div
+            className={`h-screen bg-gray-100 flex flex-col dark:bg-gray-900 ${
+                theme === true ? "light" : "dark"
+            }`}
+        >
             <nav className="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
@@ -206,7 +211,7 @@ export default function Authenticated({ header, children }) {
                             </div>
                         </div>
 
-                        <div className="mt-3 space-y-1">
+                        <div className="pt-2 mt-3 space-y-1">
                             <ResponsiveNavLink href={route("profile.edit")}>
                                 Profile
                             </ResponsiveNavLink>
@@ -218,6 +223,16 @@ export default function Authenticated({ header, children }) {
                                 Log Out
                             </ResponsiveNavLink>
                         </div>
+                    </div>
+                    <div className="p-4 space-y-1 dark flex justify-between text-black-800 dark:text-gray-200">
+                        <button className="" onClick={() => setTheme(!theme)}>
+                            Theme
+                        </button>
+                        {theme === true ? (
+                            <SunIcon className="w-4 h-4 " />
+                        ) : (
+                            <MoonIcon className="w-4 h-4 " />
+                        )}
                     </div>
                 </div>
             </nav>
