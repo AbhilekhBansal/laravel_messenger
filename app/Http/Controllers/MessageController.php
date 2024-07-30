@@ -50,12 +50,12 @@ class MessageController extends Controller
             $message = Message::where('created_at', '<', $message->created_at)->where(function ($query) use ($message) {
                 $query->where('sender_id', $message->sender_id)
                     ->where('receiver_id', $message->receiver_id)
-                    ->orWhere('sender_id', $message->sender_id)
-                    ->where('receiver_id', $message->receiver_id);
+                    ->orWhere('sender_id', $message->receiver_id)
+                    ->where('receiver_id', $message->sender_id);
             })->latest()->paginate(10);
         }
 
-        return Message::collection($message);
+        return MessageResource::collection($message);
     }
 
     public function store(StoreMessageRequest $request)

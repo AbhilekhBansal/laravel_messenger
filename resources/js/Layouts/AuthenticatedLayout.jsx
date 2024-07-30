@@ -10,7 +10,7 @@ import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 
 export default function Authenticated({ header, children }) {
     const page = usePage();
-    const [theme, setTheme] = useState(true);
+    const [theme, setTheme] = useState(localStorage.getItem(true) || false);
     const user = page.props.auth.user;
     const conversations = page.props.conversations;
 
@@ -19,6 +19,9 @@ export default function Authenticated({ header, children }) {
 
     const { emit } = useEventBus();
 
+    useEffect(() => {
+        localStorage.setItem("theme", theme);
+    }, [theme]);
     useEffect(() => {
         conversations.forEach((conversation) => {
             let channel = `message.group.${conversation.id}`;
@@ -138,6 +141,19 @@ export default function Authenticated({ header, children }) {
                                         >
                                             Log Out
                                         </Dropdown.Link>
+                                        <div className="p-4 space-y-1 dark flex justify-between text-black-800 dark:text-gray-200">
+                                            <button
+                                                className=""
+                                                onClick={() => setTheme(!theme)}
+                                            >
+                                                Theme
+                                            </button>
+                                            {theme === true ? (
+                                                <SunIcon className="w-4 h-4 " />
+                                            ) : (
+                                                <MoonIcon className="w-4 h-4 " />
+                                            )}
+                                        </div>
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>

@@ -140,7 +140,7 @@ const ChatLayout = ({ children }) => {
                 </div>
             </div>
             {/* text-white */}
-            <div className="flex-1 flex flex-col overflow-hidden dark:text-white black">
+            <div className="flex-1 flex flex-col overflow-hidden dark:text-white text-black dark:bg-slate-800 border-l-2 dark:border-slate-950 border-slate-400">
                 {children}
             </div>
         </>

@@ -12,7 +12,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/group/{group}', [MessageController::class, 'byGroup'])->name('chat.group');
     Route::post('/message', [MessageController::class, 'store'])->name('message.store');
     Route::post('/message/{message}', [MessageController::class, 'destroy'])->name('message.destroy');
-    Route::post('/message/older/{message}', [MessageController::class, 'loadOlder'])->name('message.loadOlder');
+    Route::get('/message/older/{message}', [MessageController::class, 'loadOlder'])->name('message.loadOlder');
 
 });
 

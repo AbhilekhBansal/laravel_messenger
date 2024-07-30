@@ -6,13 +6,13 @@ import {
     Transition,
 } from "@headlessui/react";
 import { Fragment } from "react";
-// import {
-//     EllipsisVerticalIcon,
-//     LockClosedIcon,
-//     LockOpenIcon,
-//     ShieldCheckIcon,
-//     UserIcon,
-// } from "@heroicons/react/24/solid";
+import {
+    EllipsisVerticalIcon,
+    LockClosedIcon,
+    LockOpenIcon,
+    ShieldCheckIcon,
+    UserIcon,
+} from "@heroicons/react/24/solid";
 export default function UserOptionsDropdown({ conversation }) {
     const changeUserRole = () => {
         console.log("changeUserRole");
@@ -50,20 +50,7 @@ export default function UserOptionsDropdown({ conversation }) {
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <MenuButton className="flex justify-center items-center w-8 h-8 rounded-full dark:hover:bg-black/40 hover:bg-white/40">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="size-6"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z"
-                            />
-                        </svg>
+                        <EllipsisVerticalIcon />
                     </MenuButton>
                 </div>
                 <Transition
@@ -89,39 +76,13 @@ export default function UserOptionsDropdown({ conversation }) {
                                     >
                                         {conversation.blocked_at && (
                                             <>
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                    className="w-4 h-4 mr-2"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
-                                                    />
-                                                </svg>
+                                                <LockOpenIcon className="w-4 h-4 mr-2" />
                                                 Unblock User
                                             </>
                                         )}
                                         {!conversation.blocked_at && (
                                             <>
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                    className="w-4 h-4 mr-2"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"
-                                                    />
-                                                </svg>
+                                                <LockClosedIcon className="w-4 h-4 mr-2" />
                                                 Block User
                                             </>
                                         )}
@@ -142,39 +103,13 @@ export default function UserOptionsDropdown({ conversation }) {
                                     >
                                         {conversation.is_admin && (
                                             <>
-                                                <svg
-                                                    className="w-4 h-4 mr-2"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                                                    />
-                                                </svg>
+                                                <UserIcon className="w-4 h-4 mr-2" />
                                                 Make Regular User
                                             </>
                                         )}
                                         {!conversation.is_admin && (
                                             <>
-                                                <svg
-                                                    className="w-4 h-4 mr-2"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none"
-                                                    viewBox="0 0 24 24"
-                                                    strokeWidth={1.5}
-                                                    stroke="currentColor"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"
-                                                    />
-                                                </svg>
+                                                <ShieldCheckIcon className="w-4 h-4 mr-2" />
                                                 Make Admin
                                             </>
                                         )}
