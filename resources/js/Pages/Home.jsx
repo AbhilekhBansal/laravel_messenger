@@ -13,7 +13,7 @@ function Home({ messages = null, selectedConversation = null }) {
     const [localMessages, setlocalMessages] = useState([]);
     const [noMoreMessages, setNoMoreMessages] = useState(false);
     const [scrollFromBottom, setScrollFromBottom] = useState(0);
-
+    const [loader, setloader] = useState(false);
     const { on } = useEventBus();
     const messagesCtrRef = useRef(null);
     const loadMoreIntersect = useRef(null);
@@ -21,6 +21,7 @@ function Home({ messages = null, selectedConversation = null }) {
     const loadMoreMessages = useCallback(
         (e) => {
             console.log(messages);
+            setloader(true);
             // Fetch more messages here
             // debugger; // Here you should call your API to fetch more messages
             if (noMoreMessages) {
@@ -30,6 +31,7 @@ function Home({ messages = null, selectedConversation = null }) {
             axios
                 .get(route("message.loadOlder", firstMessage.id))
                 .then((response) => {
+                    setloader(false);
                     if (response.data.length > 0) {
                         setNoMoreMessages(true);
                         return;
@@ -152,6 +154,11 @@ function Home({ messages = null, selectedConversation = null }) {
                     <ConversationHeader
                         selectedConversation={selectedConversation}
                     />
+                    {loader && (
+                        <div className="m-auto justify-center mt-7">
+                            <span className="loading loading-spinner loading-xs "></span>
+                        </div>
+                    )}
 
                     <div
                         className="flex-1 overflow-y-auto p-5"
