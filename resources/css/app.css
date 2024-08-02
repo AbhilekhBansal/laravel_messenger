@@ -3,12 +3,30 @@
 @tailwind utilities;
 
 
-/* 
-.conversation-item .avatar .online:before,
-.conversation-item .avatar .offline:before {
+
+.conversation-item .avatar .online::before,
+.conversation-item .avatar .offline::before {
+    content: "99";
     width: 8px;
     height: 8px;
     top: 1%;
     right: 1%;
+    position: absolute;
     outline-width: 1px;
-} */
+    background-color: blue !important;
+}
+
+.conversation-item .avatar {
+    position: relative;
+}
+
+.chat-bubble-info {
+    background-color: #959add;
+
+}
+
+.chat-bubble-info p {
+    color: #4f46e5;
+    /* color: white; */
+    word-wrap: break-word;
+}

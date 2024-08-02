@@ -20,6 +20,7 @@ function Home({ messages = null, selectedConversation = null }) {
 
     const loadMoreMessages = useCallback(
         (e) => {
+            console.log(messages);
             // Fetch more messages here
             // debugger; // Here you should call your API to fetch more messages
             if (noMoreMessages) {
@@ -40,18 +41,15 @@ function Home({ messages = null, selectedConversation = null }) {
 
                     const tmpScrollFromButton =
                         scrollHeight - scrollTop - clientHeight;
-                    console.log("tmpScrollFromButton", tmpScrollFromButton);
+                    // console.log("tmpScrollFromButton", tmpScrollFromButton);
 
                     setScrollFromBottom(
                         scrollHeight - scrollTop - clientHeight
                     );
 
                     setlocalMessages((prevMessages) => {
-                        console.log("second", response.data.data.reverse());
-                        return [
-                            ...response.data.data.reverse(),
-                            ...prevMessages,
-                        ];
+                        // console.log("second", response.data.data.reverse());
+                        return [...response.data.data, ...prevMessages];
                     });
                 });
         },
@@ -64,7 +62,10 @@ function Home({ messages = null, selectedConversation = null }) {
             selectedConversation.is_group &&
             selectedConversation.id == message.group_id
         ) {
-            setlocalMessages((prevMessages) => [...prevMessages, message]);
+            setlocalMessages((prevMessages) => [
+                ...prevMessages,
+                message.reverse(),
+            ]);
         }
         if (
             selectedConversation &&
@@ -74,7 +75,7 @@ function Home({ messages = null, selectedConversation = null }) {
         ) {
             setlocalMessages((prevMessages) => [...prevMessages, message]);
         }
-        console.log("msg updated");
+        // console.log("msg updated");
     };
 
     useEffect(() => {
@@ -83,6 +84,9 @@ function Home({ messages = null, selectedConversation = null }) {
                 messagesCtrRef.current.scrollTop =
                     messagesCtrRef.current.scrollHeight;
             }
+            // console.log("scroll to bottom");
+            setScrollFromBottom(0);
+            setNoMoreMessages(false);
         }, 10);
         const offCreated = on("message.created", messageCreated);
 
@@ -92,7 +96,10 @@ function Home({ messages = null, selectedConversation = null }) {
     }, [selectedConversation]);
 
     useEffect(() => {
-        // console.log("exp message array", messages.data.data.reverse());
+        // console.log(
+        //     "exp message array",
+        //     messages ? messages : messages.data.data.reverse()
+        // );
         setlocalMessages(messages ? messages.data.reverse() : []);
     }, [messages]);
 
