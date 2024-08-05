@@ -7,9 +7,12 @@ import ConversationHeader from "@/Components/App/ConversationHeader";
 import MessageItem from "@/Components/App/MessageItem";
 import MessageInput from "@/Components/App/MessageInput";
 import { useEventBus } from "@/EventBus";
+import { useTheme } from "@/ThemeContext";
 
 function Home({ messages = null, selectedConversation = null }) {
     // console.log(messages.data);
+    const { theme, setTheme } = useTheme();
+    const { onlineUsers, setOnlineUsers } = useTheme();
     const [localMessages, setlocalMessages] = useState([]);
     const [noMoreMessages, setNoMoreMessages] = useState(false);
     const [scrollFromBottom, setScrollFromBottom] = useState(0);
@@ -18,6 +21,7 @@ function Home({ messages = null, selectedConversation = null }) {
     const messagesCtrRef = useRef(null);
     const loadMoreIntersect = useRef(null);
 
+    console.log("selected conversation !!", selectedConversation.is_user);
     const loadMoreMessages = useCallback(
         (e) => {
             console.log(messages);
@@ -153,10 +157,17 @@ function Home({ messages = null, selectedConversation = null }) {
                 <>
                     <ConversationHeader
                         selectedConversation={selectedConversation}
+                        onlineUsers={onlineUsers}
                     />
                     {loader && (
                         <div className="m-auto justify-center mt-7">
-                            <span className="loading loading-spinner loading-xs "></span>
+                            <span
+                                className={`loading loading-infinity loading-md ${
+                                    theme
+                                        ? "text-indigo-600"
+                                        : "text-indigo-300"
+                                }`}
+                            ></span>
                         </div>
                     )}
 

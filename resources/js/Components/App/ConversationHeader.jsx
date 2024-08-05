@@ -3,7 +3,8 @@ import { Link, usePage } from "@inertiajs/react";
 import UserAvatar from "./UserAvatar";
 import GroupAvatar from "./GroupAvatar";
 
-const ConversationHeader = ({ selectedConversation }) => {
+const ConversationHeader = ({ selectedConversation, onlineUsers }) => {
+    console.log("vieuwer", onlineUsers);
     return (
         <>
             {selectedConversation && (

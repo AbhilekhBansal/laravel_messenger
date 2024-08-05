@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Echo from "laravel-echo";
 import TextInput from "@/Components/TextInput";
 import ConversationItem from "@/Components/App/ConversationItem";
+import { useTheme } from "@/ThemeContext";
 
 const ChatLayout = ({ children }) => {
     const page = usePage();
@@ -10,7 +11,7 @@ const ChatLayout = ({ children }) => {
     const selectedConversation = page.props.selectedConversation;
     const [localConversations, setLocalConversations] = useState([]);
     const [sortedConversations, setSortedConversations] = useState([]);
-    const [onlineUsers, setOnlineUsers] = useState([]);
+    const { onlineUsers, setOnlineUsers } = useTheme();
     const isUserOnline = (userId) => onlineUsers[userId];
 
     const onSearch = (ev) => {
@@ -33,7 +34,7 @@ const ChatLayout = ({ children }) => {
                     return -1;
                 }
                 if (a.last_message_at && b.last_message_at) {
-                    return b.last_message_date.localecompare(
+                    return b.last_message_date.localeCompare(
                         a.last_message_date
                     );
                 } else if (a.last_message_date) {
@@ -95,7 +96,9 @@ const ChatLayout = ({ children }) => {
             >
                 {/* text-gray-200 */}
                 <div className="flex items-center dark:text-gray-200 text-gray-800 justify-between py-2 px-2 text-xl font-medium ">
-                    My conversations
+                    <div className=" ml-4 user-name">
+                        {page.props.auth.user.name}
+                    </div>
                     <div
                         className="tooltip tooltip-left"
                         data-tip="Create new Group"
