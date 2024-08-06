@@ -7,10 +7,11 @@ import { Link, usePage } from "@inertiajs/react";
 import GroupAvatar from "@/Components/App/GroupAvatar";
 import { useEventBus } from "@/EventBus";
 import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
+import { useTheme } from "@/ThemeContext";
 
 export default function Authenticated({ header, children }) {
     const page = usePage();
-    const [theme, setTheme] = useState(localStorage.getItem(true) || false);
+    const { theme, setTheme } = useTheme();
     const user = page.props.auth.user;
     const conversations = page.props.conversations;
 
@@ -153,7 +154,7 @@ export default function Authenticated({ header, children }) {
                                             {theme === true ? (
                                                 <SunIcon className="w-5 h-5 text-yellow-400" />
                                             ) : (
-                                                <MoonIcon className="w-4 h-4 text-slate-200" />
+                                                <MoonIcon className="w-4 h-4 text-blue-300" />
                                             )}
                                         </div>
                                     </Dropdown.Content>
