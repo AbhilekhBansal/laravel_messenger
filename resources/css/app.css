@@ -13,8 +13,8 @@
 
 
 
-.conversation-item .avatar.online:before,
-.conversation-item .avatar.offline:before {
+.avatar.online:before,
+.avatar.offline:before {
     content: "";
     width: 8px;
     height: 8px;
@@ -25,7 +25,7 @@
 
 }
 
-.conversation-item .avatar.online:before {
+.avatar.online:before {
     background-color: var(--primary-color);
 }
 
@@ -35,13 +35,21 @@
 }
 
 .chat-bubble-info {
+    background-color: rgb(228, 228, 228);
+}
+
+.chat-bubble-info.self {
     background-color: var(--primary-bg);
 }
 
-.chat-bubble-info p {
+.chat-bubble-info.self p {
     color: var(--primary-color);
     /* color: white; */
     word-wrap: break-word;
+}
+
+.chat-bubble .chat-bubble-info p {
+    background-color: #959add;
 }
 
 .user-name {

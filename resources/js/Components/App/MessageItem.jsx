@@ -15,20 +15,18 @@ const MessageItem = ({ message }) => {
                 }
             >
                 {<UserAvatar user={message.sender} />}
-                <div className="chat-header">
-                    {/* {message.sender_id === currentUser.id
+                {/* <div className="chat-header">
+                    {message.sender_id === currentUser.id
                         ? "You"
                         : message.sender.name}
                     <time className="text-xs opacity-50 ml-2">
                         {formateMessageDateLong(message.created_at)}
-                    </time> */}
-                </div>
+                    </time>
+                </div> */}
                 <div
                     className={
-                        "chat-bubble relative" +
-                        (message.sender_id === currentUser.id
-                            ? " chat-bubble-info "
-                            : "")
+                        "chat-bubble relative chat-bubble-info " +
+                        (message.sender_id === currentUser.id ? " self" : "")
                     }
                 >
                     <div className="chat-message">

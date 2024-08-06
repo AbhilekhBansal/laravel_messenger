@@ -4,6 +4,7 @@ import Echo from "laravel-echo";
 import TextInput from "@/Components/TextInput";
 import ConversationItem from "@/Components/App/ConversationItem";
 import { useTheme } from "@/ThemeContext";
+import { useEventBus } from "@/EventBus";
 
 const ChatLayout = ({ children }) => {
     const page = usePage();
@@ -13,6 +14,7 @@ const ChatLayout = ({ children }) => {
     const [sortedConversations, setSortedConversations] = useState([]);
     const { onlineUsers, setOnlineUsers } = useTheme();
     const isUserOnline = (userId) => onlineUsers[userId];
+    const { on } = useEventBus();
 
     const onSearch = (ev) => {
         const search = ev.target.value.toLowerCase();
@@ -22,6 +24,40 @@ const ChatLayout = ({ children }) => {
             })
         );
     };
+    const messageCreated = (message) => {
+        setLocalConversations((oldUsers) => {
+            return oldUsers.map((user) => {
+                if (
+                    message.reciver_id &&
+                    !user.is_group &&
+                    (user.id === message.sender_id ||
+                        user.id === message.reciver_id)
+                ) {
+                    user.last_message = message.message;
+                    user.last_message_date = new Date(message.created_at);
+                    return user;
+                }
+                // if the message is from a group
+                if (
+                    message.group_id &&
+                    user.is_group &&
+                    user.id === message.group_id
+                ) {
+                    user.last_message = message.message;
+                    user.last_message_date = new Date(message.created_at);
+                    return user;
+                }
+                return user;
+            });
+        });
+    };
+
+    useEffect(() => {
+        const offCreated = on("message.created", messageCreated);
+        return () => {
+            offCreated();
+        };
+    }, [on]);
 
     useEffect(() => {
         setSortedConversations(

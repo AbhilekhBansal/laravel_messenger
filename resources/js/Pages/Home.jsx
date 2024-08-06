@@ -21,7 +21,7 @@ function Home({ messages = null, selectedConversation = null }) {
     const messagesCtrRef = useRef(null);
     const loadMoreIntersect = useRef(null);
 
-    console.log("selected conversation !!", selectedConversation.is_user);
+    // console.log("selected conversation !!", selectedConversation.is_user);
     const loadMoreMessages = useCallback(
         (e) => {
             console.log(messages);
