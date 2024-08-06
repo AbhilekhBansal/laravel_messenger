@@ -4,29 +4,48 @@
 
 
 
-.conversation-item .avatar .online::before,
-.conversation-item .avatar .offline::before {
-    content: "99";
+:root {
+    --primary-color: #4f46e5;
+    --primary-bg: #959add;
+    --secondary-color: #f0f0f0;
+    --font-size: 16px;
+}
+
+
+
+.conversation-item .avatar.online:before,
+.conversation-item .avatar.offline:before {
+    content: "";
     width: 8px;
     height: 8px;
     top: 1%;
     right: 1%;
     position: absolute;
     outline-width: 1px;
-    background-color: blue !important;
+
 }
+
+.conversation-item .avatar.online:before {
+    background-color: var(--primary-color);
+}
+
 
 .conversation-item .avatar {
     position: relative;
 }
 
 .chat-bubble-info {
-    background-color: #959add;
-
+    background-color: var(--primary-bg);
 }
 
 .chat-bubble-info p {
-    color: #4f46e5;
+    color: var(--primary-color);
     /* color: white; */
     word-wrap: break-word;
+}
+
+.user-name {
+    font-weight: bold;
+    /* font-size: var(--font-size); */
+    color: var(--primary-color);
 }

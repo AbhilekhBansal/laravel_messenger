@@ -95,7 +95,9 @@ const ChatLayout = ({ children }) => {
             >
                 {/* text-gray-200 */}
                 <div className="flex items-center dark:text-gray-200 text-gray-800 justify-between py-2 px-2 text-xl font-medium ">
-                    My conversations
+                    <div className=" ml-4 user-name">
+                        {page.props.auth.user.name}
+                    </div>
                     <div
                         className="tooltip tooltip-left"
                         data-tip="Create new Group"
