@@ -8,7 +8,7 @@ const MessageItem = ({ message }) => {
         <>
             <div
                 className={
-                    "chat" +
+                    "chat mt-1 mb-1" +
                     (message.sender_id === currentUser.id
                         ? " chat-end"
                         : " chat-start")
