@@ -4,7 +4,8 @@ import UserAvatar from "./UserAvatar";
 import GroupAvatar from "./GroupAvatar";
 
 const ConversationHeader = ({ selectedConversation, onlineUsers }) => {
-    console.log("vieuwer", onlineUsers);
+    const isUserOnline = (userId) => onlineUsers[userId];
+
     return (
         <>
             {selectedConversation && (
@@ -17,7 +18,10 @@ const ConversationHeader = ({ selectedConversation, onlineUsers }) => {
                             <ArrowLeftIcon className="w-6" />
                         </Link>
                         {selectedConversation.is_user && (
-                            <UserAvatar user={selectedConversation} />
+                            <UserAvatar
+                                user={selectedConversation}
+                                online={!!isUserOnline(selectedConversation.id)}
+                            />
                         )}
                         {selectedConversation.is_group && <GroupAvatar />}
                         <div>

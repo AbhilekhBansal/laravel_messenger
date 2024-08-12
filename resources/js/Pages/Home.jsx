@@ -10,7 +10,6 @@ import { useEventBus } from "@/EventBus";
 import { useTheme } from "@/ThemeContext";
 
 function Home({ messages = null, selectedConversation = null }) {
-    // console.log(messages.data);
     const { theme, setTheme } = useTheme();
     const { onlineUsers, setOnlineUsers } = useTheme();
     const [localMessages, setlocalMessages] = useState([]);
@@ -21,7 +20,6 @@ function Home({ messages = null, selectedConversation = null }) {
     const messagesCtrRef = useRef(null);
     const loadMoreIntersect = useRef(null);
 
-    console.log("selected conversation !!", selectedConversation.is_user);
     const loadMoreMessages = useCallback(
         (e) => {
             console.log(messages);
