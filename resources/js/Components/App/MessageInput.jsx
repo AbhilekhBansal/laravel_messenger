@@ -5,9 +5,16 @@ import {
     PaperClipIcon,
     PhotoIcon,
 } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import NewMessageInput from "./NewMessageInput";
 import axios from "axios";
+import EmojiPicker from "emoji-picker-react";
+import {
+    Popover,
+    PopoverButton,
+    PopoverPanel,
+    Transition,
+} from "@headlessui/react";
 
 const MessageInput = ({ conversation = null }) => {
     const [newMessage, setNewMessage] = useState("");
@@ -54,6 +61,22 @@ const MessageInput = ({ conversation = null }) => {
             });
     };
 
+    const onLikeClick = () => {
+        if (messageSending) {
+            return;
+        }
+        const data = { message: "👍" };
+        if (conversation.is_user) {
+            data["receiver_id"] = conversation.id;
+        } else if (conversation.is_group) {
+            data["group_id"] = conversation.id;
+        }
+
+        axios.post(route("message.store"), data);
+    };
+
+    const sendRequest = (formData) => {};
+
     return (
         <div className="flex flex-wrap items-start border-t border-slate-700 py-3">
             <div className="order-2 flex-1 xs:flex-none xs:order-1 p-2">
@@ -99,11 +122,31 @@ const MessageInput = ({ conversation = null }) => {
                     <p className="text-red-500 text-xs">{inputErrorMessage}</p>
                 )}
             </div>
+
             <div className="order-3 xs:order-3 p-2 flex">
-                <button className="p-1 text-gray-400 hover:text-gray-300">
+                <Popover className="relative">
+                    <PopoverButton className="p-1 text-gray-400 hover:text-gray-300">
+                        <FaceSmileIcon className="w-6" />
+                    </PopoverButton>
+                    <PopoverPanel
+                        anchor="bottom end"
+                        className="flex flex-col [--anchor-gap:30px] sm:[--anchor-gap:60px]"
+                    >
+                        <EmojiPicker
+                            theme="dark"
+                            onEmojiClick={(ev) =>
+                                setNewMessage(newMessage + ev.emoji)
+                            }
+                        ></EmojiPicker>
+                    </PopoverPanel>
+                </Popover>
+                {/* <button className="p-1 text-gray-400 hover:text-gray-300">
                     <FaceSmileIcon className="w-6" />
-                </button>
-                <button className="p-1 text-gray-400 hover:text-gray-300">
+                </button> */}
+                <button
+                    onClick={onLikeClick}
+                    className="p-1 text-gray-400 hover:text-gray-300"
+                >
                     <HandThumbUpIcon className="w-6" />
                 </button>
             </div>
