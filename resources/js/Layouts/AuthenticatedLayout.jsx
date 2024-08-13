@@ -15,6 +15,7 @@ export default function Authenticated({ header, children }) {
     const user = page.props.auth.user;
     const conversations = page.props.conversations;
 
+    const [updatedConvoMessage, setUpdatedConvoMessage] = useState("");
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
@@ -39,9 +40,10 @@ export default function Authenticated({ header, children }) {
                     console.log("Channel error: ", error);
                 })
                 .listen(".SocketMessage" || "SocketMessage", (event) => {
-                    console.log("SocketMessage", event);
                     // Update the conversation with the new message
                     const message = event.message;
+                    console.log(message);
+                    setUpdatedConvoMessage(message);
 
                     emit("message.created", message);
                     if (message.sender_id == user.id) {
@@ -76,6 +78,24 @@ export default function Authenticated({ header, children }) {
             });
         };
     }, [conversations]);
+
+    useEffect(() => {
+        if (updatedConvoMessage) {
+            conversations.map((conv) => {
+                if (
+                    conv.id === parseInt(updatedConvoMessage.receiver_id) ||
+                    (conv.id === parseInt(updatedConvoMessage.sender_id) &&
+                        conv.is_group)
+                ) {
+                    conv.last_message = updatedConvoMessage.message;
+                    conv.updated_at = updatedConvoMessage.updated_at;
+                }
+            });
+            setUpdatedConvoMessage(null);
+        }
+    }, [updatedConvoMessage]);
+    console.log("Updated conversations", conversations);
+
     return (
         <div
             className={`h-screen bg-gray-100 flex flex-col dark:bg-gray-900 ${

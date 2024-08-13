@@ -137,6 +137,8 @@ const MessageInput = ({ conversation = null }) => {
                             onEmojiClick={(ev) =>
                                 setNewMessage(newMessage + ev.emoji)
                             }
+                            width={300}
+                            height={350}
                         ></EmojiPicker>
                     </PopoverPanel>
                 </Popover>

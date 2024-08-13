@@ -143,3 +143,7 @@
 .chat-message-content pre code {
     background-color: transparent;
 }
+
+.EmojiPickerReact.epr-dark-theme {
+    --epr-emoji-size: 25px;
+}

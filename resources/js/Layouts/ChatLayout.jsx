@@ -46,11 +46,14 @@ const ChatLayout = ({ children }) => {
                 }
             })
         );
-    }, [localConversations]);
+    }, [localConversations, conversations]);
 
     useEffect(() => {
+        console.log("first");
         setLocalConversations(conversations);
     }, [conversations]);
+
+    console.log(conversations);
 
     useEffect(() => {
         window.Echo.join("online")
