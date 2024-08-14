@@ -13,7 +13,23 @@ const MessageInput = ({ conversation = null }) => {
     const [newMessage, setNewMessage] = useState("");
     const [inputErrorMessage, setInputErrorMessage] = useState("");
     const [messageSending, setmessageSending] = useState(false);
+    const [chosenFiles, setChosenFiles] = useState([]);
+    const [uploadProgress, setUploadProgress] = useState(0);
 
+    const onFileChange = (ev) => {
+        const files = ev.target.files;
+
+        const updatedFiles = [...files].map((file) => {
+            return {
+                file: file,
+                url: URL.createObjectURL(file),
+            };
+        });
+
+        setChosenFiles((prevFiles) => {
+            return [...prevFiles, ...updatedFiles];
+        });
+    };
     const onSendClick = () => {
         if (messageSending) {
             return;
@@ -28,6 +44,9 @@ const MessageInput = ({ conversation = null }) => {
             return;
         }
         const formData = new FormData();
+        chosenFiles.forEach((file) => {
+            formData.append("attachments[]", file.file);
+        });
         formData.append("message", newMessage);
         if (conversation.is_user) {
             formData.append("receiver_id", conversation.id);
@@ -41,17 +60,24 @@ const MessageInput = ({ conversation = null }) => {
                     const progress = Math.round(
                         (progressEvent.loaded / progressEvent.total) * 100
                     );
-                    // console.log(progress);
+                    console.log(progress);
+                    setUploadProgress(progress);
                 },
             })
             .then((response) => {
                 // console.log("responsse", response);
                 setNewMessage("");
                 setmessageSending(false);
+                setChosenFiles([]);
+                setUploadProgress(0);
             })
             .catch((error) => {
                 console.log("error", error);
                 setmessageSending(false);
+                setChosenFiles([]);
+                const message =
+                    error.response?.data?.message || "Failed to send message.";
+                setInputErrorMessage(message);
             });
     };
 
@@ -63,6 +89,7 @@ const MessageInput = ({ conversation = null }) => {
                     <input
                         type="file"
                         multiple
+                        onChange={onFileChange}
                         className="absolute left-0 top-0 bottom-0 right-0 z-20 opacity-0 cursor-pointer"
                     />
                 </button>
@@ -71,6 +98,7 @@ const MessageInput = ({ conversation = null }) => {
                     <input
                         type="file"
                         multiple
+                        onChange={onFileChange}
                         accept="image/*"
                         className="absolute left-0 top-0 bottom-0 right-0 z-20 opacity-0 cursor-pointer"
                     />
@@ -96,9 +124,41 @@ const MessageInput = ({ conversation = null }) => {
                         {/* <span className="hidden sm:inline">Send</span> */}
                     </button>
                 </div>
+                {!!uploadProgress && (
+                    <progress
+                        className="progress progress-info w-full"
+                        value={uploadProgress}
+                        max={100}
+                    ></progress>
+                )}
                 {inputErrorMessage && (
                     <p className="text-red-500 text-xs">{inputErrorMessage}</p>
                 )}
+                <div className="flex flex-wrap gap-1 mt-2">
+                    {chosenFiles.map((file, index) => (
+                        <div
+                            key={file.file.name}
+                            className={
+                                `relative flex justify-between cursor-pointer ` +
+                                (isImage(file.file) ? " w-[240px]" : "")
+                            }
+                        >
+                            {!isImage(file.file) && (
+                                <img
+                                    src={file.url}
+                                    alt=""
+                                    className="w-16 h-16 object-cover"
+                                />
+                            )}
+                            {isAudio(file.file) && (
+                                <CustomAudioPlayer
+                                    file={file}
+                                    showVloume={false}
+                                />
+                            )}
+                        </div>
+                    ))}
+                </div>
             </div>
             <div className="order-3 xs:order-3 p-2 flex">
                 <button className="p-1 text-gray-400 hover:text-gray-300">
