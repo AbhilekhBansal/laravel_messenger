@@ -4,6 +4,7 @@ import Echo from "laravel-echo";
 import TextInput from "@/Components/TextInput";
 import ConversationItem from "@/Components/App/ConversationItem";
 import { useTheme } from "@/ThemeContext";
+import { useEventBus } from "@/EventBus";
 
 const ChatLayout = ({ children }) => {
     const page = usePage();
@@ -11,6 +12,7 @@ const ChatLayout = ({ children }) => {
     const selectedConversation = page.props.selectedConversation;
     const [localConversations, setLocalConversations] = useState([]);
     const [sortedConversations, setSortedConversations] = useState([]);
+    const { on } = useEventBus();
     const { onlineUsers, setOnlineUsers } = useTheme();
     const isUserOnline = (userId) => onlineUsers[userId];
 
@@ -22,6 +24,42 @@ const ChatLayout = ({ children }) => {
             })
         );
     };
+
+    const messageCreated = (message) => {
+        setLocalConversations((oldUsers) => {
+            return oldUsers.map((u) => {
+                // if the message is from a user
+                if (
+                    message.receiver_id &&
+                    !u.is_group &&
+                    (u.id === message.sender_id || u.id === message.receiver_id)
+                ) {
+                    console.log("hello from bus");
+                    u.last_message = message.message;
+                    u.last_message_date = new Date(message.created_at);
+                    return u;
+                }
+                // if the message is from a group
+                if (
+                    message.group_id &&
+                    u.is_group &&
+                    u.id == message.group_id
+                ) {
+                    u.last_message = message.message;
+                    u.last_message_date = new Date(message.created_at);
+                    return u;
+                }
+                return u;
+            });
+        });
+    };
+
+    useEffect(() => {
+        const offCreated = on("message.created", messageCreated);
+        return () => {
+            offCreated();
+        };
+    }, [on]);
 
     useEffect(() => {
         setSortedConversations(
@@ -46,14 +84,13 @@ const ChatLayout = ({ children }) => {
                 }
             })
         );
-    }, [localConversations, conversations]);
+    }, [localConversations]);
 
     useEffect(() => {
-        console.log("first");
         setLocalConversations(conversations);
     }, [conversations]);
 
-    console.log(conversations);
+    // console.log(conversations);
 
     useEffect(() => {
         window.Echo.join("online")
