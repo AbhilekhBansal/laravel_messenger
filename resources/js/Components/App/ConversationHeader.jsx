@@ -4,7 +4,7 @@ import UserAvatar from "./UserAvatar";
 import GroupAvatar from "./GroupAvatar";
 
 const ConversationHeader = ({ selectedConversation, onlineUsers }) => {
-    console.log("vieuwer", onlineUsers);
+    // console.log("vieuwer", onlineUsers);
     const isUserOnline = (userId) => onlineUsers[userId];
     const online = !!isUserOnline(selectedConversation.id);
     return (

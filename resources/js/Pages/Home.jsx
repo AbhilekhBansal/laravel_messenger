@@ -68,10 +68,7 @@ function Home({ messages = null, selectedConversation = null }) {
             selectedConversation.is_group &&
             selectedConversation.id == message.group_id
         ) {
-            setlocalMessages((prevMessages) => [
-                ...prevMessages,
-                message.reverse(),
-            ]);
+            setlocalMessages((prevMessages) => [...prevMessages, message]);
         }
         if (
             selectedConversation &&

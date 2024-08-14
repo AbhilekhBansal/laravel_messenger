@@ -39,7 +39,7 @@ export default function Authenticated({ header, children }) {
                     console.log("Channel error: ", error);
                 })
                 .listen(".SocketMessage" || "SocketMessage", (event) => {
-                    console.log("SocketMessage", event);
+                    // console.log("SocketMessage", event);
                     // Update the conversation with the new message
                     const message = event.message;
 

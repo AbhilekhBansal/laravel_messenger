@@ -13,6 +13,7 @@ const MessageInput = ({ conversation = null }) => {
     const [newMessage, setNewMessage] = useState("");
     const [inputErrorMessage, setInputErrorMessage] = useState("");
     const [messageSending, setmessageSending] = useState(false);
+
     const onSendClick = () => {
         if (messageSending) {
             return;

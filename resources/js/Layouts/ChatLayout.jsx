@@ -14,7 +14,7 @@ const ChatLayout = ({ children }) => {
     const [sortedConversations, setSortedConversations] = useState([]);
     const { onlineUsers, setOnlineUsers } = useTheme();
     const isUserOnline = (userId) => onlineUsers[userId];
-    const { on } = useEventBus();
+    const { on, emit } = useEventBus();
 
     const onSearch = (ev) => {
         const search = ev.target.value.toLowerCase();
@@ -28,10 +28,10 @@ const ChatLayout = ({ children }) => {
         setLocalConversations((oldUsers) => {
             return oldUsers.map((user) => {
                 if (
-                    message.reciver_id &&
+                    message.receiver_id &&
                     !user.is_group &&
-                    (user.id === message.sender_id ||
-                        user.id === message.reciver_id)
+                    (user.id == message.sender_id ||
+                        user.id == message.receiver_id)
                 ) {
                     user.last_message = message.message;
                     user.last_message_date = new Date(message.created_at);
@@ -41,7 +41,7 @@ const ChatLayout = ({ children }) => {
                 if (
                     message.group_id &&
                     user.is_group &&
-                    user.id === message.group_id
+                    user.id == message.group_id
                 ) {
                     user.last_message = message.message;
                     user.last_message_date = new Date(message.created_at);
@@ -53,6 +53,7 @@ const ChatLayout = ({ children }) => {
     };
 
     useEffect(() => {
+        // console.log("update sidebar");
         const offCreated = on("message.created", messageCreated);
         return () => {
             offCreated();
