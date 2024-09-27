@@ -125,7 +125,7 @@ const ChatLayout = ({ children }) => {
             window.Echo.leave("online");
         };
     }, []);
-
+    console.log(conversations);
     return (
         <>
             {/* bg-slate-800 */}

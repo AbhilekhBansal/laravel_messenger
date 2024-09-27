@@ -2,7 +2,8 @@ import { usePage } from "@inertiajs/react";
 import UserAvatar from "./UserAvatar";
 import ReactMarkdown from "react-markdown";
 import { formateMessageDateLong } from "@/helpers";
-const MessageItem = ({ message }) => {
+import MessageAttachments from "./MessageAttachments";
+const MessageItem = ({ message, attachmentClick }) => {
     const currentUser = usePage().props.auth.user;
     return (
         <>
@@ -42,6 +43,10 @@ const MessageItem = ({ message }) => {
                         <div className="chat-message-content text-wrap">
                             <ReactMarkdown>{message.message}</ReactMarkdown>
                         </div>
+                        <MessageAttachments
+                            attachments={message.attachments}
+                            attachmentClick={attachmentClick}
+                        />
                         <div
                             className={`chat-message-footer float-right ${
                                 message.sender_id !== currentUser.id

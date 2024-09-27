@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class MessageAttachmentResource extends JsonResource
 {
@@ -22,7 +23,7 @@ class MessageAttachmentResource extends JsonResource
             'name' => $this->name,
             'mime' => $this->mime,
             'size' => $this->size,
-            'url' => Stroage::url($this->path),
+            'url' => Storage::url($this->path),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

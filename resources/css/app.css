@@ -34,6 +34,10 @@
     position: relative;
 }
 
+.chat-bubble {
+    max-width: 80%;
+}
+
 .chat-bubble-info {
     background-color: var(--primary-bg);
 }

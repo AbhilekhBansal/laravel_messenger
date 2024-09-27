@@ -8,8 +8,10 @@ use App\Http\Resources\MessageResource;
 use App\Models\Conversation;
 use App\Models\Group;
 use App\Models\Message;
+use App\Models\MessageAttachment;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class MessageController extends Controller
 {
@@ -83,9 +85,9 @@ class MessageController extends Controller
                     'path' => $file->store($directory, 'public'),
                 ];
                 $attachment = MessageAttachment::create($model);
-                $attachments = $attachments;
+                $attachments[] = $attachment;
             }
-            $message->attachments = $attachment;
+            $message->attachments()->saveMany($attachments);
         }
 
         if ($reciverId) {
