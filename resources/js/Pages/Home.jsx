@@ -93,6 +93,28 @@ function Home({ messages = null, selectedConversation = null }) {
         // console.log("msg updated");
     };
 
+    const messageDeleted = ({ message }) => {
+        if (
+            selectedConversation &&
+            selectedConversation.is_group &&
+            selectedConversation.id == message.group_id
+        ) {
+            setlocalMessages((prevMessages) =>
+                prevMessages.filter((m) => m.id !== message.id)
+            );
+        }
+        if (
+            selectedConversation &&
+            selectedConversation.is_user &&
+            (selectedConversation.id == message.sender_id ||
+                selectedConversation.id == message.receiver_id)
+        ) {
+            setlocalMessages((prevMessages) =>
+                prevMessages.filter((m) => m.id !== message.id)
+            );
+        }
+    };
+
     useEffect(() => {
         setTimeout(() => {
             if (messagesCtrRef.current) {
@@ -104,9 +126,11 @@ function Home({ messages = null, selectedConversation = null }) {
             setNoMoreMessages(false);
         }, 10);
         const offCreated = on("message.created", messageCreated);
+        const offDeleted = on("message.deleted", messageDeleted);
 
         return () => {
             offCreated();
+            offDeleted();
         };
     }, [selectedConversation]);
 

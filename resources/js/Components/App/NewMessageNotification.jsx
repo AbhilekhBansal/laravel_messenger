@@ -21,7 +21,7 @@ export default function NewMessageNotification({}) {
                     setToasts((prevToasts) =>
                         prevToasts.filter((t) => t.id !== uuid)
                     );
-                }, 3000);
+                }, 5000);
             });
         }
     }, [on]);
@@ -31,7 +31,7 @@ export default function NewMessageNotification({}) {
             {toasts.map((toast, index) => (
                 <div
                     key={toast.id}
-                    className="alert alert-success py-3 px-4 text-gray-100 rounded-md"
+                    className="alert alert-success py-3 px-4 text-gray-100 rounded-md flex items-center gap-2 shadow-md"
                 >
                     <Link
                         href={
@@ -39,10 +39,18 @@ export default function NewMessageNotification({}) {
                                 ? route("chat.group", toast.group_id)
                                 : route("chat.user", toast.user.id)
                         }
-                        className="flex gap-2 items-center"
+                        className="flex gap-2 items-center w-full"
                     >
                         <UserAvatar user={toast.user} />
-                        <span>{toast.message}</span>
+
+                        <div className="flex flex-col w-full">
+                            <h3 className="font-bold text-sm text-white">
+                                {toast.user.name}
+                            </h3>
+                            <span className="text-xs text-gray-300 break-words overflow-hidden">
+                                {toast.message.substring(0, 20)}
+                            </span>
+                        </div>
                     </Link>
                 </div>
             ))}

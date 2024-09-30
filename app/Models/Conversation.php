@@ -18,18 +18,20 @@ class Conversation extends Model
 
     public function lastMessage()
     {
-        return $this->belongTo(Message::class, 'last_message_id');
+        return $this->belongsTo(Message::class, 'last_message_id');
     }
 
     public function user1()
     {
-        return $this->belongTo(User::class, 'user_id1');
+        return $this->belongsTo(User::class, 'user_id1');
     }
 
     public function user2()
     {
-        return $this->belongTo(User::class, 'user_id2');
+        return $this->belongsTo(User::class, 'user_id2');
     }
+
+    
 
     public static function getConversationsForSidebar(User $user)
     {

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 const ThemeContext = createContext();
 
@@ -6,7 +6,7 @@ export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState(
-        localStorage.getItem("theme") == "true" || "false"
+        JSON.parse(localStorage.getItem("theme")) ? true : false
     );
 
     const [onlineUsers, setOnlineUsers] = useState([]);

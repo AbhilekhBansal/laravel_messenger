@@ -1,21 +1,28 @@
 import { useEventBus } from "@/EventBus";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Toast({}) {
     const [toasts, setToasts] = useState([]);
     const { on } = useEventBus();
+    const currentRef = useRef(false);
 
     useEffect(() => {
-        on("toast.show", ({ message }) => {
-            const uuid = uuidv4();
-            setToasts((prevToasts) => [...prevToasts, { id: uuid, message }]);
-            setTimeout(() => {
-                setToasts((prevToasts) =>
-                    prevToasts.filter((t) => t.id !== uuid)
-                );
-            }, 3000);
-        });
+        if (!currentRef.current) {
+            on("toast.show", ({ message }) => {
+                const uuid = uuidv4();
+                setToasts((prevToasts) => [
+                    ...prevToasts,
+                    { id: uuid, message },
+                ]);
+                currentRef.current = true;
+                setTimeout(() => {
+                    setToasts((prevToasts) =>
+                        prevToasts.filter((t) => t.id !== uuid)
+                    );
+                }, 3000);
+            });
+        }
     }, [on]);
     return (
         <div className="toast min-w-[280px]">

@@ -36,11 +36,13 @@
 
 .chat-bubble {
     max-width: 80%;
+    min-width: 18%;
 }
 
 .chat-bubble-info {
     background-color: var(--primary-bg);
 }
+
 
 .chat-bubble-info p {
     color: var(--primary-color);

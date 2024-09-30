@@ -1,4 +1,4 @@
-import { formatBytes, isPDF, isPreviewable } from "@/helpers";
+import { formatBytes, isPDF, isPreviewable, isVideo } from "@/helpers";
 import { PaperClipIcon } from "@heroicons/react/24/solid";
 import React from "react";
 
@@ -9,6 +9,9 @@ const AttachmentPreview = ({ file }) => {
             <div>
                 {isPDF(file.file) && (
                     <img src="/img/pdf.png" className="w-12" />
+                )}
+                {isVideo(file.file) && (
+                    <img src="/img/video.png" className="w-12" />
                 )}
                 {!isPreviewable(file.file) && (
                     <div className="flex justify-center items-center w-10 h-10 bg-gray-700 rounded">

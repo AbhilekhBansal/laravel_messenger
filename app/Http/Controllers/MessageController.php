@@ -107,11 +107,30 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         if ($message->sender_id !== auth()->id()) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Forbidden'], 403);
         }
 
+        
+        $group =null;
+        $conversation =null;
+        
+        // check if the message is the group message
+        if($message->group_id){
+            $group = Group::where('last_message_id', $message->group_id)->first();
+            
+        }else{
+            $conversation = Conversation::where('last_message_id', $message->id)->first();
+            
+        }
         $message->delete();
 
-        return response()->json(['message' => 'Message deleted successfully'], 200);
+        if ($group) {
+            $lastMessage = Group::find($group->id)?->lastMessage;
+        } elseif ($conversation) {
+            $lastMessage = Conversation::find($conversation->id)?->lastMessage;
+        } else{
+            $lastMessage = null;
+        }
+        return response()->json(['message' => $lastMessage ? new MessageResource($lastMessage) : null]);
     }
 }

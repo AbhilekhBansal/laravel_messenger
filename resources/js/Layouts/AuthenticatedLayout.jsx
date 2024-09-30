@@ -23,9 +23,6 @@ export default function Authenticated({ header, children }) {
     const { emit } = useEventBus();
 
     useEffect(() => {
-        localStorage.setItem("theme", theme);
-    }, [theme]);
-    useEffect(() => {
         conversations.forEach((conversation) => {
             let channel = `message.group.${conversation.id}`;
             if (conversation.is_user) {
@@ -152,7 +149,10 @@ export default function Authenticated({ header, children }) {
                                                         ? "hover:bg-slate-600"
                                                         : "hover:bg-yellow-500"
                                                 }`}
-                                                onClick={() => setTheme(!theme)}
+                                                onClick={() => {
+                                                    setTheme((prev) => !prev);
+                                                    console.log(theme);
+                                                }}
                                             >
                                                 <button className="">
                                                     Theme

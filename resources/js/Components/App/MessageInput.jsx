@@ -46,7 +46,7 @@ const MessageInput = ({ conversation = null }) => {
     // console.log("files ", chosenFiles);
 
     const onSendClick = () => {
-        // emit("toast.show", "Message sent successfully");
+        emit("toast.show", { message: "Message sent successfully" });
         if (messageSending) {
             return;
         }

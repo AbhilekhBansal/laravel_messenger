@@ -13,7 +13,7 @@ const ChatLayout = ({ children }) => {
     const [localConversations, setLocalConversations] = useState([]);
     const [sortedConversations, setSortedConversations] = useState([]);
     const { on } = useEventBus();
-    const { onlineUsers, setOnlineUsers } = useTheme();
+    const { onlineUsers, setOnlineUsers, setTheme } = useTheme();
     const isUserOnline = (userId) => onlineUsers[userId];
 
     const onSearch = (ev) => {
@@ -34,7 +34,6 @@ const ChatLayout = ({ children }) => {
                     !u.is_group &&
                     (u.id === message.sender_id || u.id === message.receiver_id)
                 ) {
-                    console.log("hello from bus");
                     u.last_message = message.message;
                     u.last_message_date = new Date(message.created_at);
                     return u;
@@ -54,10 +53,20 @@ const ChatLayout = ({ children }) => {
         });
     };
 
+    const messageDeleted = ({ prevMessage }) => {
+        if (!prevMessage) {
+            return;
+        }
+        //find the conversation by prevmessage and remove it
+        messageCreated(prevMessage);
+    };
+
     useEffect(() => {
         const offCreated = on("message.created", messageCreated);
+        const offDeleted = on("message.deleted", messageDeleted);
         return () => {
             offCreated();
+            offDeleted();
         };
     }, [on]);
 
