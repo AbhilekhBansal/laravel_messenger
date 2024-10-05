@@ -18,7 +18,7 @@ class Group extends Model
 
     public function users()
     {
-        return $this->belongsTOMany(Group::class, 'group_users', 'group_id', 'user_id');
+        return $this->belongsTOMany(User::class, 'group_users', 'group_id', 'user_id');
     }
 
     public function messages()
@@ -30,7 +30,9 @@ class Group extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function lastMessage(){
+
+    public function lastMessage()
+    {
         return $this->belongsTo(Message::class, 'last_message_id');
     }
 
@@ -65,7 +67,7 @@ class Group extends Model
         // create or update group with recived group id and message
         return self::updateOrCreate(
             ['id' => $groupId],
-            ['last_message' => $message->id]
+            ['last_message_id' => $message->id]
         );
     }
 }

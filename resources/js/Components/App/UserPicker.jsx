@@ -2,10 +2,15 @@ import {
     Combobox,
     ComboboxButton,
     ComboboxInput,
+    ComboboxOption,
     ComboboxOptions,
     Transition,
 } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/24/solid";
+import {
+    CheckIcon,
+    ChevronDownIcon,
+    ChevronUpDownIcon,
+} from "@heroicons/react/24/solid";
 import { Fragment, useState } from "react";
 
 export default function UserPicker({ value, options, onSelect }) {
@@ -39,11 +44,11 @@ export default function UserPicker({ value, options, onSelect }) {
                                     ? `${persons.length} users selected`
                                     : "";
                             }}
-                            placeholder="select users..."
+                            placeholder={` ${selected.length} select users...`}
                             onChange={(ev) => setQuery(ev.target.value)}
                         />
                         <ComboboxButton className="absolute inset-y-0 right-0 flex pr-2 items-center">
-                            <ChevronUpDownIcon
+                            <ChevronDownIcon
                                 className="w-5 h-5 text-gray-400"
                                 aria-hidden="true"
                             />
@@ -56,28 +61,41 @@ export default function UserPicker({ value, options, onSelect }) {
                         leaveTo="opacity-0"
                         afterLeave={() => setQuery("")}
                     >
-                        <ComboboxOptions className="absolute mt-1 max-h-60 w-full  overflow-auto rounded-md bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus: outline-none sm: text-sm">
+                        <ComboboxOptions className="absolute mt-1 max-h-60 w-full  overflow-auto rounded-md bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus: outline-none sm:text-sm">
                             {filteredPeople.length === 0 && query !== "" ? (
                                 <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                                     Nothing Found
                                 </div>
                             ) : (
-                                filteredPeople.map((person)=>(
-                                    <ComboboxOption key={person.id}
-                                    
-                                    className={({active})=`relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-teal-600 text-white" : "bg-gray-900 text-gray-100"}`}
-                                    value={person}>
-                                        {({selected,active})=>(
+                                filteredPeople.map((person) => (
+                                    <ComboboxOption
+                                        key={person.id}
+                                        className={({ active }) =>
+                                            ` flex cursor-default select-none py-2 pl-10 pr-4 ${
+                                                active
+                                                    ? "bg-teal-600 text-white"
+                                                    : "bg-gray-900 text-gray-100"
+                                            }`
+                                        }
+                                        value={person}
+                                    >
+                                        {({ selected }) => (
                                             <>
-                                                <span className={`block truncate ${
-                                                    selected ? "font-medium" : "font-normal"
-                                                }`}>
-                                            {person.name}
+                                                {/* {selected ? (
+                                                    <CheckIcon
+                                                        className="w-5 h-5 text-primary "
+                                                        aria-hidden="true"
+                                                    />
+                                                ) : null} */}
+                                                <span
+                                                    className={`block truncate ${
+                                                        selected
+                                                            ? "font-bold text-primary"
+                                                            : "font-normal"
+                                                    }`}
+                                                >
+                                                    {person.name}
                                                 </span>
-                                            {selected ? (
-                                                <CheckIcon className="w-5 h-5"
-                                                aria-hidden="true"/>
-                                            ) : null}
                                             </>
                                         )}
                                     </ComboboxOption>
@@ -88,9 +106,20 @@ export default function UserPicker({ value, options, onSelect }) {
                 </div>
             </Combobox>
             {selected && (
-                <div className="flex gap-2 mt-3">
-
-                </div>)}
+                <div className="flex flex-wrap gap-2 mt-3">
+                    {selected.map((person) => (
+                        <>
+                            <div
+                                title={person.name}
+                                key={person.id}
+                                className="badge badge-primary gap-1  w-fit h-fit text-center "
+                            >
+                                {person.name.slice(0, 15) + "..."}
+                            </div>
+                        </>
+                    ))}
+                </div>
+            )}
         </>
     );
 }

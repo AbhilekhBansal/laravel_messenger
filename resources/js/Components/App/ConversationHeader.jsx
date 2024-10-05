@@ -1,10 +1,19 @@
-import { ArrowLeftIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
+import {
+    ArrowLeftIcon,
+    PencilSquareIcon,
+    TrashIcon,
+} from "@heroicons/react/24/solid";
 import { Link, usePage } from "@inertiajs/react";
 import UserAvatar from "./UserAvatar";
 import GroupAvatar from "./GroupAvatar";
 import axios from "axios";
+import GroupUserPopover from "./GroupUserPopover";
+import GroupDescriptionPopover from "./GroupDescriptionPopover";
+import { useEventBus } from "@/EventBus";
 
 const ConversationHeader = ({ selectedConversation, onlineUsers }) => {
+    const authUser = usePage().props.auth.user;
+    const { emit } = useEventBus();
     const onDeleteGroup = () => {
         if (!window.confirm("Are you sure you want to delete this Group?")) {
             return;
@@ -72,7 +81,7 @@ const ConversationHeader = ({ selectedConversation, onlineUsers }) => {
                                                 );
                                             }}
                                         >
-                                            <PencilSquareIcon className="w-4" />
+                                            <PencilSquareIcon className="w-4 " />
                                         </button>
                                     </div>
                                     <div

@@ -7,6 +7,7 @@ import {
 } from "@headlessui/react";
 import { Fragment } from "react";
 import {
+    ChevronDownIcon,
     EllipsisVerticalIcon,
     LockClosedIcon,
     LockOpenIcon,
@@ -39,11 +40,11 @@ export default function MessageOptionsDropdown({ message }) {
         <>
             <Menu
                 as="div"
-                className="relative inline-block text-left right-3 -top-1"
+                className="absolute inline-block text-right right-1 top-2"
             >
                 <div>
                     <MenuButton className="flex justify-center items-center w-6 h-6 rounded-full dark:hover:bg-black/40 hover:bg-white/40">
-                        <EllipsisVerticalIcon className="w-4 h-4" />
+                        <ChevronDownIcon className="w-4 h-4" />
                     </MenuButton>
                 </div>
                 <Transition

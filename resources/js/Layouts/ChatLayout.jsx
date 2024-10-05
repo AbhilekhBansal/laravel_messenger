@@ -5,6 +5,8 @@ import TextInput from "@/Components/TextInput";
 import ConversationItem from "@/Components/App/ConversationItem";
 import { useTheme } from "@/ThemeContext";
 import { useEventBus } from "@/EventBus";
+import GroupModal from "@/Components/App/GroupModal";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 
 const ChatLayout = ({ children }) => {
     const page = usePage();
@@ -12,6 +14,7 @@ const ChatLayout = ({ children }) => {
     const selectedConversation = page.props.selectedConversation;
     const [localConversations, setLocalConversations] = useState([]);
     const [sortedConversations, setSortedConversations] = useState([]);
+    const [showGroupModal, setShowGroupModal] = useState(false);
     const { on } = useEventBus();
     const { onlineUsers, setOnlineUsers, setTheme } = useTheme();
     const isUserOnline = (userId) => onlineUsers[userId];
@@ -64,9 +67,20 @@ const ChatLayout = ({ children }) => {
     useEffect(() => {
         const offCreated = on("message.created", messageCreated);
         const offDeleted = on("message.deleted", messageDeleted);
+        const offModalShow = on("GroupModal.show", (group) => {
+            setShowGroupModal(true);
+        });
+
+        const offGroupDelete = on("group.deleted", ({ id, name }) => {
+            setLocalConversations((oldConversations) => {
+                return oldConversations.filter((c) => c.id !== id);
+            });
+        });
         return () => {
             offCreated();
             offDeleted();
+            offModalShow();
+            offGroupDelete();
         };
     }, [on]);
 
@@ -153,21 +167,11 @@ const ChatLayout = ({ children }) => {
                         data-tip="Create new Group"
                     >
                         {/* text-gray-400 hover:text-gray-200*/}
-                        <button className="dark:text-gray-400 text-gray-600 dark:hover:text-gray-200 hover:text-gray-900">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="size-6"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                                />
-                            </svg>
+                        <button
+                            onClick={(ev) => setShowGroupModal(true)}
+                            className="dark:text-gray-400 text-gray-600 dark:hover:text-gray-200 hover:text-gray-900"
+                        >
+                            <PencilSquareIcon className="w-4 h-4 inline-block ml-2" />
                         </button>
                     </div>
                 </div>
@@ -195,6 +199,10 @@ const ChatLayout = ({ children }) => {
             <div className="flex-1 flex flex-col overflow-hidden dark:text-white text-black dark:bg-slate-800 border-l-2 dark:border-slate-950 border-slate-400">
                 {children}
             </div>
+            <GroupModal
+                show={showGroupModal}
+                onClose={() => setShowGroupModal(false)}
+            />
         </>
     );
 };

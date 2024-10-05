@@ -2,11 +2,10 @@
 
 namespace App\Observers;
 
+use App\Models\Conversation;
 use App\Models\Group;
 use App\Models\Message;
-use App\Models\Conversation;
 use Illuminate\Support\Facades\Storage;
-
 
 class MessageObserver
 {
@@ -45,16 +44,16 @@ class MessageObserver
                 $prevMessage = Message::where(function ($query) use ($message) {
                     $query->where(function ($q) use ($message) {
                         $q->where('sender_id', $message->sender_id)
-                          ->where('receiver_id', $message->receiver_id);
+                            ->where('receiver_id', $message->receiver_id);
                     })
-                    ->orWhere(function ($q) use ($message) {
-                        $q->where('sender_id', $message->receiver_id)
-                          ->where('receiver_id', $message->sender_id);
-                    });
+                        ->orWhere(function ($q) use ($message) {
+                            $q->where('sender_id', $message->receiver_id)
+                                ->where('receiver_id', $message->sender_id);
+                        });
                 })
-                ->where('id', '!=', $message->id)
-                ->latest()
-                ->first();
+                    ->where('id', '!=', $message->id)
+                    ->latest()
+                    ->first();
                 if ($prevMessage) {
 
                     $conversation->last_message_id = $prevMessage->id;
