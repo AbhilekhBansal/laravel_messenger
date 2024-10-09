@@ -108,15 +108,13 @@ export default function UserPicker({ value, options, onSelect }) {
             {selected && (
                 <div className="flex flex-wrap gap-2 mt-3">
                     {selected.map((person) => (
-                        <>
-                            <div
-                                title={person.name}
-                                key={person.id}
-                                className="badge badge-primary gap-1  w-fit h-fit text-center "
-                            >
-                                {person.name.slice(0, 15) + "..."}
-                            </div>
-                        </>
+                        <div
+                            title={person.name}
+                            key={person.id}
+                            className="badge badge-primary gap-1  w-fit h-fit text-center "
+                        >
+                            {person.name.slice(0, 15) + "..."}
+                        </div>
                     ))}
                 </div>
             )}

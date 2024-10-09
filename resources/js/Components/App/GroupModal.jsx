@@ -29,20 +29,18 @@ export default function GroupModal({ show = false, onClose = () => {} }) {
             put(route("group.update", group.id), {
                 onSuccess: () => {
                     closeModal();
-                    emit(
-                        "toast.show",
-                        `Group ${data.name} was updated successfully`
-                    );
+                    emit("toast.show", {
+                        message: `Group ${data.name} was updated successfully`,
+                    });
                 },
             });
             return;
         }
         post(route("group.store"), {
             onSuccess: () => {
-                emit(
-                    "toast.show",
-                    `Group ${data.name} was created successfully`
-                );
+                emit("toast.show", {
+                    message: `Group ${data.name} was created successfully`,
+                });
                 closeModal();
             },
         });

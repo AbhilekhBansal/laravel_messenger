@@ -22,6 +22,9 @@ const ConversationHeader = ({ selectedConversation, onlineUsers }) => {
         axios
             .delete(route("group.destroy", selectedConversation.id))
             .then((response) => {
+                emit("TopNotification", {
+                    message: `Group ${selectedConversation.name} has been schaduled and will be deleted soon.`,
+                });
                 console.log("response", response.data);
             })
             .catch((error) => {

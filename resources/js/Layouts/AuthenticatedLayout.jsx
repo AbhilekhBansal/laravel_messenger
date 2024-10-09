@@ -10,6 +10,7 @@ import { MoonIcon, SunIcon } from "@heroicons/react/24/solid";
 import { useTheme } from "@/ThemeContext";
 import Toast from "@/Components/App/Toast";
 import NewMessageNotification from "@/Components/App/NewMessageNotification";
+import TopNotification from "@/Components/App/TopNotification";
 
 export default function Authenticated({ header, children }) {
     const page = usePage();
@@ -62,8 +63,7 @@ export default function Authenticated({ header, children }) {
             if (conversation.is_group) {
                 window.Echo.private(`group.deleted.${conversation.id}`)
                     .listen("GroupDeleted", (e) => {
-                        console.log("Group deleted", e);
-                        debugger;
+                        // console.log("Group deleted", e);
                         emit("group.deleted", { id: e.id, name: e.name });
                     })
                     .error((e) => {
@@ -293,6 +293,7 @@ export default function Authenticated({ header, children }) {
             </div>
             <Toast />
             <NewMessageNotification />
+            <TopNotification />
         </>
     );
 }
