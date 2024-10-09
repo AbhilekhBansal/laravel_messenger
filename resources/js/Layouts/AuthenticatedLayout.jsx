@@ -59,17 +59,17 @@ export default function Authenticated({ header, children }) {
                     });
                 });
 
-            // if (conversation.is_group) {
-            //     window.Echo.private(`group.deleted.${conversation.id}`)
-            //         .listen("GroupDeleted", (e) => {
-            //             console.log("Group deleted");
-            //             debugger;
-            //             emit("group.deleted", { id: e.id, name: e.name });
-            //         })
-            //         .catch((e) => {
-            //             console.error(e);
-            //         });
-            // }
+            if (conversation.is_group) {
+                window.Echo.private(`group.deleted.${conversation.id}`)
+                    .listen("GroupDeleted", (e) => {
+                        console.log("Group deleted", e);
+                        debugger;
+                        emit("group.deleted", { id: e.id, name: e.name });
+                    })
+                    .error((e) => {
+                        console.error(e);
+                    });
+            }
         });
         return () => {
             conversations.forEach((conversation) => {

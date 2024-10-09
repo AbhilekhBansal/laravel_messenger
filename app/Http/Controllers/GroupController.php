@@ -39,11 +39,13 @@ class GroupController extends Controller
     public function destroy(Group $group)
     {
         // check if the user is owner of the group
-        if($group->owuner_id !== auth()->id()){
-            abort(403);
+        if($group->owner_id !== auth()->id()){
+           
+            return response()->json(['message'=>'Forbidden'], 403);
         }
         DeleteGroupJob::dispatch($group) ->delay(now()->addSecond(15));
 
         return response()->json(['status'=>200,'message'=>'Group delete was schaduled and will be deleted soon.']);
     }
 }
+ 

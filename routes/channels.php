@@ -22,5 +22,6 @@ Broadcast::channel('message.group.{groupId}', function ($user, int $groupId) {
 
 
 Broadcast::channel('group.deleted.{groupId}', function ($user, int $groupId) {
-    return $user->groups->contains('id', $groupId) ? $user : null;
+    return $user->groups->contains('id', $groupId);
 });
+  

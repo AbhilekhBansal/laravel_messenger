@@ -1,4 +1,4 @@
-import { usePage } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import Echo from "laravel-echo";
 import TextInput from "@/Components/TextInput";
@@ -73,8 +73,17 @@ const ChatLayout = ({ children }) => {
 
         const offGroupDelete = on("group.deleted", ({ id, name }) => {
             setLocalConversations((oldConversations) => {
-                return oldConversations.filter((c) => c.id !== id);
+                return oldConversations.filter((c) => c.id != id);
             });
+
+            emit("toast.show", `Group ${name} has been deleted`);
+            if (
+                selectedConversation &&
+                selectedConversation.is_group &&
+                selectedConversation.id == id
+            ) {
+                router.visit(route("dashboard"));
+            }
         });
         return () => {
             offCreated();

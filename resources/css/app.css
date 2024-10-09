@@ -62,6 +62,7 @@
 
 .chat-message .chat-message-content {
     color: #434343;
+    padding-right: 10px;
 }
 
 .chat-message-content>blockquote,
