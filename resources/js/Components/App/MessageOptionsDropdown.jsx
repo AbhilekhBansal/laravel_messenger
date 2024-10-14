@@ -43,7 +43,8 @@ export default function MessageOptionsDropdown({ message }) {
                 className="absolute inline-block text-right right-1 top-2"
             >
                 <div>
-                    <MenuButton className="flex justify-center items-center w-6 h-6 rounded-full dark:hover:bg-black/40 hover:bg-white/40">
+                    {/* dark:hover:bg-black/40 hover:bg-white/40 */}
+                    <MenuButton className="flex justify-center items-center w-6 h-6 rounded-full ">
                         <ChevronDownIcon className="w-4 h-4" />
                     </MenuButton>
                 </div>

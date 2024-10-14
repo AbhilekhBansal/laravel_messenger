@@ -43,7 +43,7 @@ class GroupController extends Controller
            
             return response()->json(['message'=>'Forbidden'], 403);
         }
-        DeleteGroupJob::dispatch($group) ->delay(now()->addSecond(15));
+        DeleteGroupJob::dispatch($group) ->delay(now()->addSecond(10));
 
         return response()->json(['status'=>200,'message'=>'Group delete was schaduled and will be deleted soon.']);
     }

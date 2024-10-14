@@ -16,7 +16,9 @@ const MessageItem = ({ message, attachmentClick }) => {
                         : " chat-start")
                 }
             >
-                {<UserAvatar user={message.sender} />}
+                {message.sender_id !== currentUser.id && (
+                    <UserAvatar user={message.sender} />
+                )}
                 <div className="chat-header">
                     {/* {message.sender_id === currentUser.id
                         ? "You"
